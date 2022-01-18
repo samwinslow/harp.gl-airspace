@@ -4,7 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import { Theme } from "@here/harp-datasource-protocol"
 import { GeoCoordinates } from "@here/harp-geoutils"
+import { GeoJsonDataProvider, VectorTileDataSource } from "@here/harp-vectortile-datasource"
 
 import { View } from "./View"
 
@@ -13,6 +15,38 @@ const app = new View({
 })
 
 const mapView = app.mapView
+
+const airspaceDataPath = "resources/united_states.geojson"
+
+async function getAirspace() {
+    const res = await fetch(airspaceDataPath)
+    const data = await res.json()
+    const dataProvider = new GeoJsonDataProvider("airspace", data)
+    const dataSource = new VectorTileDataSource({
+        dataProvider,
+        name: "airspace",
+        styleSetName: "geojson",
+    })
+
+    await mapView.addDataSource(dataSource)
+
+    const theme: Theme = {
+        styles: {
+          geojson: [
+            {
+              when: ["==", ["geometry-type"], "Point"],
+              technique: "circles",
+              renderOrder: 10000,
+              color: "#FF0000",
+              size: 15,
+            },
+          ],
+        },
+    }
+    dataSource.setTheme(theme)
+}
+
+
 
 // make map full-screen
 mapView.resize(window.innerWidth, window.innerHeight)
@@ -23,7 +57,9 @@ window.addEventListener("resize", () => {
 })
 
 // center the camera to New York
-mapView.lookAt({ target: new GeoCoordinates(40.70398928, -74.01319808), zoomLevel: 17, tilt: 40 })
+mapView.lookAt({ target: new GeoCoordinates(40.70398928, -74.01319808), zoomLevel: 4, tilt: 40 })
 
 // make sure the map is rendered
+getAirspace()
 mapView.update()
+

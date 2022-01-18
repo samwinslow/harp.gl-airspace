@@ -35,10 +35,10 @@ export class View {
             decoderUrl: "decoder.bundle.js"
         })
 
-        const dataSource = new VectorTileDataSource({
-            authenticationCode: ""
-        })
-        mapView.addDataSource(dataSource)
+        // const dataSource = new VectorTileDataSource({
+        //     authenticationCode: ""
+        // })
+        // mapView.addDataSource(dataSource)
 
         MapControls.create(mapView)
 
