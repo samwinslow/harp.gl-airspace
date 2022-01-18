@@ -12,36 +12,36 @@ import { VectorTileDataSource } from "@here/harp-vectortile-datasource"
 const defaultTheme = "resources/berlin_tilezen_base.json"
 
 export interface ViewParameters {
-    theme?: string | Theme
-    canvas: HTMLCanvasElement
+  theme?: string | Theme
+  canvas: HTMLCanvasElement
 }
 
 export class View {
-    readonly canvas: HTMLCanvasElement
-    readonly theme: string | Theme
+  readonly canvas: HTMLCanvasElement
+  readonly theme: string | Theme
 
-    readonly mapView: MapView
+  readonly mapView: MapView
 
-    constructor(args: ViewParameters) {
-        this.canvas = args.canvas
-        this.theme = args.theme === undefined ? defaultTheme : args.theme
-        this.mapView = this.initialize()
-    }
+  constructor(args: ViewParameters) {
+  this.canvas = args.canvas
+  this.theme = args.theme === undefined ? defaultTheme : args.theme
+  this.mapView = this.initialize()
+  }
 
-    protected initialize(): MapView {
-        const mapView = new MapView({
-            canvas: this.canvas,
-            theme: this.theme,
-            decoderUrl: "decoder.bundle.js"
-        })
+  protected initialize(): MapView {
+  const mapView = new MapView({
+    canvas: this.canvas,
+    theme: this.theme,
+    decoderUrl: "decoder.bundle.js"
+  })
 
-        // const dataSource = new VectorTileDataSource({
-        //     authenticationCode: ""
-        // })
-        // mapView.addDataSource(dataSource)
+  // const dataSource = new VectorTileDataSource({
+  //   authenticationCode: ""
+  // })
+  // mapView.addDataSource(dataSource)
 
-        MapControls.create(mapView)
+  MapControls.create(mapView)
 
-        return mapView
-    }
+  return mapView
+  }
 }

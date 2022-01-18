@@ -11,7 +11,7 @@ import { GeoJsonDataProvider, VectorTileDataSource } from "@here/harp-vectortile
 import { View } from "./View"
 
 const app = new View({
-    canvas: document.getElementById("map") as HTMLCanvasElement
+  canvas: document.getElementById("map") as HTMLCanvasElement
 })
 
 const mapView = app.mapView
@@ -19,31 +19,38 @@ const mapView = app.mapView
 const airspaceDataPath = "resources/united_states.geojson"
 
 async function getAirspace() {
-    const res = await fetch(airspaceDataPath)
-    const data = await res.json()
-    const dataProvider = new GeoJsonDataProvider("airspace", data)
-    const dataSource = new VectorTileDataSource({
-        dataProvider,
-        name: "airspace",
-        styleSetName: "geojson",
-    })
+  const res = await fetch(airspaceDataPath)
+  const data = await res.json()
+  const dataProvider = new GeoJsonDataProvider("airspace", data)
+  const dataSource = new VectorTileDataSource({
+  dataProvider,
+  name: "airspace",
+  styleSetName: "geojson",
+  })
 
-    await mapView.addDataSource(dataSource)
+  await mapView.addDataSource(dataSource)
 
-    const theme: Theme = {
-        styles: {
-          geojson: [
-            {
-              when: ["==", ["geometry-type"], "Point"],
-              technique: "circles",
-              renderOrder: 10000,
-              color: "#FF0000",
-              size: 15,
-            },
-          ],
-        },
-    }
-    dataSource.setTheme(theme)
+  const theme: Theme = {
+  styles: {
+    geojson: [
+    {
+      when: ["==", ["geometry-type"], "Point"],
+      technique: "circles",
+      renderOrder: 10000,
+      color: "#FF0000",
+      size: 15,
+    },
+    {
+      when: ["==", ["geometry-type"], "Point"],
+      technique: "circles",
+      renderOrder: 10000,
+      color: "#FF0000",
+      size: 15,
+    },
+    ],
+  },
+  }
+  dataSource.setTheme(theme)
 }
 
 
@@ -53,7 +60,7 @@ mapView.resize(window.innerWidth, window.innerHeight)
 
 // react on resize events from the browser.
 window.addEventListener("resize", () => {
-    mapView.resize(window.innerWidth, window.innerHeight)
+  mapView.resize(window.innerWidth, window.innerHeight)
 })
 
 // center the camera to New York

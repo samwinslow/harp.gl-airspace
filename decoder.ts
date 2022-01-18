@@ -5,14 +5,14 @@
  */
 
 declare let self: Worker & {
-    importScripts(..._scripts: string[]): void
+  importScripts(..._scripts: string[]): void
 }
 
 self.importScripts("three.min.js")
 
 import {
-    GeoJsonTilerService,
-    VectorTileDecoderService
+  GeoJsonTilerService,
+  VectorTileDecoderService
 } from "@here/harp-vectortile-datasource/index-worker"
 
 VectorTileDecoderService.start()
