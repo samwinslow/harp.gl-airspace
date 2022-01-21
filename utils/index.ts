@@ -11,6 +11,19 @@ const parseInt_safe = (input: string): number => {
   return 0
 }
 
+export const MAP_COLORS = {
+  black: '#000',
+  cyan: '#2a77bb',
+  magenta: '#8b2656',
+  darkCyan: '#0e4787',
+}
+
+export const getAirspaceClass = (input: string): string | null => {
+  if (!input) return null
+  const airportRegex = /CLASS\s+([ABCDEG])/i
+  return input.match(airportRegex)?.[1]?.toLowerCase() ?? null
+}
+
 export const getAltitudeType = (input: string): 'msl' | 'agl' => {
   if (/agl|gnd/i.test(input)) return 'agl'
   return 'msl'
