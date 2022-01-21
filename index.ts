@@ -39,28 +39,36 @@ const addFeatureHeight = (feature: Feature): Feature => {
 
 const setFeatureAppearance = (feature: Feature): Feature => {
   const { geometry, properties } = feature
-  const cls = getAirspaceClass(properties.Category)
+  const cls = getAirspaceClass(properties.Name)
   let fillColor = MAP_COLORS.black
   let lineColor = MAP_COLORS.black
   let fillOpacity = 0.25
 
   if (cls === 'a') {
     fillColor = MAP_COLORS.magenta
-  } else if (cls == 'b') {
+  } else if (cls === 'b') {
     fillColor = MAP_COLORS.cyan
     lineColor = MAP_COLORS.cyan
     fillOpacity = 0.5
-  } else if (cls == 'c') {
+  } else if (cls === 'c') {
     fillColor = MAP_COLORS.magenta
     lineColor = MAP_COLORS.magenta
     fillOpacity = 0.5
-  } else if (cls == 'd') {
+  } else if (cls === 'd') {
     fillColor = MAP_COLORS.cyan
     lineColor = MAP_COLORS.cyan
-  } else if (cls == 'e') {
+  } else if (cls === 'e') {
     fillColor = MAP_COLORS.magenta
     lineColor = 'transparent'
     fillOpacity = 0.1
+  } else if (cls === 'danger') {
+    fillColor = MAP_COLORS.red
+    lineColor = MAP_COLORS.black
+    fillOpacity = 0.5
+  } else if (cls === 'alert' || cls === 'restricted') {
+    fillColor = MAP_COLORS.red
+    lineColor = MAP_COLORS.black
+    fillOpacity = 0.75
   }
   return {
     ...feature,
@@ -110,28 +118,27 @@ const getAirspace = async () => {
         {
           when: ['==', ['geometry-type'], 'Point'],
           technique: 'text',
-          renderOrder: 2,
           color: '#000',
           size: 15,
         },
         {
           when: ['==', ['geometry-type'], 'Polygon'],
           technique: 'extruded-polygon',
-          renderOrder: 1,
           color: ['get', 'fillColor'],
           lineColor: ['get', 'lineColor'],
           opacity: ['get', 'fillOpacity'],
           transparent: true,
+          lineColorMix: 0,
           lineWidth: 1,
         },
         {
           when: ['==', ['geometry-type'], 'MultiPolygon'],
           technique: 'extruded-polygon',
-          renderOrder: 1,
           color: ['get', 'fillColor'],
           lineColor: ['get', 'lineColor'],
           opacity: ['get', 'fillOpacity'],
           transparent: true,
+          lineColorMix: 0,
           lineWidth: 1,
         },
       ],

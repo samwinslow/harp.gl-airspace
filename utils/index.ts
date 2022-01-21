@@ -16,10 +16,14 @@ export const MAP_COLORS = {
   cyan: '#2a77bb',
   magenta: '#8b2656',
   darkCyan: '#0e4787',
+  red: '#ff1111',
 }
 
 export const getAirspaceClass = (input: string): string | null => {
   if (!input) return null
+  if (input.match(/^DZ/i)) return 'danger'
+  if (input.match(/^A\d+/i)) return 'alert'
+  if (input.match(/^R\d+/i)) return 'restricted'
   const airportRegex = /CLASS\s+([ABCDEG])/i
   return input.match(airportRegex)?.[1]?.toLowerCase() ?? null
 }
