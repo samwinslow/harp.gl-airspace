@@ -17,8 +17,6 @@ const app = new View({
 
 const mapView = app.mapView
 
-const airspaceDataPath = 'resources/united_states.geojson'
-
 const addFeatureHeight = (feature: Feature): Feature => {
   const { geometry, properties } = feature
   if (!['Polygon', 'MultiPolygon'].includes(geometry.type) || !properties.Top) {
@@ -98,11 +96,36 @@ const processFeatures = (
   }
 }
 
+const getStateBoundaries = async () => {
+  const res = await fetch('resources/gz_2010_us_outline_5m.geojson')
+  const geojson = await res.json()
+  const dataProvider = new GeoJsonDataProvider('states', geojson)
+  const dataSource = new VectorTileDataSource({
+    dataProvider,
+    name: 'states',
+    styleSetName: 'geojson',
+  })
+
+  await mapView.addDataSource(dataSource)
+
+  const theme: Theme = {
+    styles: {
+      geojson: [
+        {
+          when: ['==', ['geometry-type'], 'LineString'],
+          technique: 'line',
+          color: '#000',
+        },
+      ]
+    }
+  }
+  dataSource.setTheme(theme)
+}
+
 const getAirspace = async () => {
-  const res = await fetch(airspaceDataPath)
+  const res = await fetch('resources/united_states.geojson')
   const geojson = await res.json()
   const data = processFeatures(geojson, [addFeatureHeight, setFeatureAppearance])
-  console.log(data)
   const dataProvider = new GeoJsonDataProvider('airspace', data)
   const dataSource = new VectorTileDataSource({
     dataProvider,
@@ -161,6 +184,7 @@ window.addEventListener('resize', () => {
 mapView.lookAt({ target: new GeoCoordinates(40.70398928, -74.01319808), zoomLevel: 10, tilt: 40 })
 
 // make sure the map is rendered
+getStateBoundaries()
 getAirspace()
 mapView.update()
 
