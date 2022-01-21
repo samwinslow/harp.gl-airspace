@@ -31,23 +31,23 @@ async function getAirspace() {
   await mapView.addDataSource(dataSource)
 
   const theme: Theme = {
-  styles: {
-    geojson: [
-      {
-        when: ["==", ["geometry-type"], "Point"],
-        technique: "circles",
-        renderOrder: 2,
-        color: "#FF0000",
-        size: 15,
-      },
-      {
-        when: ["==", ["geometry-type"], "Polygon"],
-        technique: "extruded-polygon",
-        renderOrder: 1,
-        color: "rgba(0,0,255,0.5)",
-      },
-    ],
-  },
+    styles: {
+      geojson: [
+        {
+          when: ["==", ["geometry-type"], "Point"],
+          technique: "circles",
+          renderOrder: 2,
+          color: "#FF0000",
+          size: 15,
+        },
+        {
+          when: ["==", ["geometry-type"], "Polygon"],
+          technique: "extruded-polygon",
+          renderOrder: 1,
+          color: "rgba(0,0,255,0.5)",
+        },
+      ],
+    },
   }
   dataSource.setTheme(theme)
 }

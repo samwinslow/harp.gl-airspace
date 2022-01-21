@@ -1,15 +1,16 @@
 {
   "name": "harp.gl-airspace",
   "version": "0.1.0",
-  "description": "Generated with generator-harp.gl 0.28.0",
+  "description": "Visualizing FAA airspace with Harp.gl",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest **/*.test.ts",
     "build": "webpack",
     "start": "webpack serve"
   },
-  "author": "",
-  "private": true,
+  "author": "samwinslow",
   "dependencies": {
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-typescript": "^7.16.7",
     "@here/harp-datasource-protocol": "^0.28.0",
     "@here/harp-geoutils": "^0.28.0",
     "@here/harp-map-controls": "^0.28.0",
@@ -20,7 +21,9 @@
     "three": "^0.129.0"
   },
   "devDependencies": {
+    "@types/jest": "^27.4.0",
     "@types/node": "^17.0.9",
+    "jest": "^27.4.7",
     "ts-loader": "^9.2.6",
     "typescript": "^4.5.4",
     "webpack": "^5.66.0",
