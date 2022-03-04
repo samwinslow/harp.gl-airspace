@@ -36,7 +36,7 @@ const addFeatureHeight = (feature: Feature): Feature => {
 }
 
 const setFeatureAppearance = (feature: Feature): Feature => {
-  const { geometry, properties } = feature
+  const { properties } = feature
   const cls = getAirspaceClass(properties.Name)
   let fillColor = MAP_COLORS.black
   let lineColor = MAP_COLORS.black
